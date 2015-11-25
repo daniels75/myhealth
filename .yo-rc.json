@@ -1,0 +1,20 @@
+{
+  "generator-jhipster": {
+    "baseName": "myhealth",
+    "packageName": "org.daniels.jhipster.myhealth",
+    "packageFolder": "org/daniels/jhipster/myhealth",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": "elasticsearch",
+    "useCompass": false,
+    "buildTool": "maven",
+    "frontendBuilder": "grunt",
+    "javaVersion": "8",
+    "rememberMeKey": "6e9148825026743851b1cedba0b98bef2c325337"
+  }
+}
