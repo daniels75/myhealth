@@ -1,0 +1,76 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "otherEntityNameCapitalized": "User",
+            "otherEntityField": "login"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "date",
+            "fieldType": "LocalDate",
+            "fieldNameCapitalized": "Date",
+            "fieldNameUnderscored": "date",
+            "fieldInJavaBeanMethod": "Date",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "exercise",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Exercise",
+            "fieldNameUnderscored": "exercise",
+            "fieldInJavaBeanMethod": "Exercise",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "meals",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Meals",
+            "fieldNameUnderscored": "meals",
+            "fieldInJavaBeanMethod": "Meals",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "alcohol",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Alcohol",
+            "fieldNameUnderscored": "alcohol",
+            "fieldInJavaBeanMethod": "Alcohol",
+            "fieldValidate": false
+        },
+        {
+            "fieldId": 5,
+            "fieldName": "notes",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Notes",
+            "fieldNameUnderscored": "notes",
+            "fieldInJavaBeanMethod": "Notes",
+            "fieldValidate": false
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": true,
+    "fieldsContainCustomTime": true,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20151130184335",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "validation": true
+}

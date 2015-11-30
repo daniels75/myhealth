@@ -1,0 +1,57 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "user",
+            "relationshipNameCapitalized": "User",
+            "relationshipFieldName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityNameCapitalized": "User",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "preferences"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "weekly_goal",
+            "fieldType": "Integer",
+            "fieldNameCapitalized": "Weekly_goal",
+            "fieldNameUnderscored": "weekly_goal",
+            "fieldInJavaBeanMethod": "Weekly_goal",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": "10",
+            "fieldValidateRulesMax": "21"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "weight_units",
+            "fieldType": "String",
+            "fieldNameCapitalized": "Weight_units",
+            "fieldNameUnderscored": "weight_units",
+            "fieldInJavaBeanMethod": "Weight_units",
+            "fieldValidate": true,
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "fieldsContainOwnerManyToMany": false,
+    "fieldsContainOwnerOneToOne": false,
+    "fieldsContainOneToMany": false,
+    "fieldsContainLocalDate": false,
+    "fieldsContainCustomTime": false,
+    "fieldsContainBigDecimal": false,
+    "fieldsContainDateTime": false,
+    "fieldsContainDate": false,
+    "changelogDate": "20151130184536",
+    "dto": "no",
+    "pagination": "no",
+    "validation": true
+}

@@ -1,0 +1,38 @@
+
+<div>
+    <h2><span translate="myhealthApp.preferences.detail.title">Preferences</span> {{preferences.id}}</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th translate="entity.detail.field">Field</th>
+                    <th translate="entity.detail.value">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span translate="myhealthApp.preferences.weekly_goal">Weekly_goal</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{preferences.weekly_goal}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span translate="myhealthApp.preferences.weight_units">Weight_units</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{preferences.weight_units}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="preferences"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>
