@@ -89,6 +89,15 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
+    @OneToOne
+    @JsonIgnore
+    private Preferences preferences;
+    public Preferences getPreferences() {
+    return preferences;
+    }
+    public void setPreferences(Preferences preferences) {
+    this.preferences = preferences;
+    }
     public Long getId() {
         return id;
     }

@@ -35,10 +35,6 @@ public class Preferences implements Serializable {
     @Column(name = "weight_units", nullable = false)
     private String weight_units;
 
-    @OneToOne(mappedBy = "preferences")
-    @JsonIgnore
-    private User user;
-
     public Long getId() {
         return id;
     }
@@ -61,14 +57,6 @@ public class Preferences implements Serializable {
 
     public void setWeight_units(String weight_units) {
         this.weight_units = weight_units;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
