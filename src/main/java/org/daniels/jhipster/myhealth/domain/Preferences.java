@@ -1,16 +1,24 @@
 package org.daniels.jhipster.myhealth.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.Serializable;
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.daniels.jhipster.myhealth.domain.enumeration.Units;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Objects;
 
 /**
  * A Preferences.
@@ -29,11 +37,12 @@ public class Preferences implements Serializable {
     @Min(value = 10)
     @Max(value = 21)
     @Column(name = "weekly_goal", nullable = false)
-    private Integer weekly_goal;
+    private Integer weeklyGoal;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "weight_units", nullable = false)
-    private String weight_units;
+    private Units weightUnits;
 
     public Long getId() {
         return id;
@@ -43,20 +52,20 @@ public class Preferences implements Serializable {
         this.id = id;
     }
 
-    public Integer getWeekly_goal() {
-        return weekly_goal;
+    public Integer getWeeklyGoal() {
+        return weeklyGoal;
     }
 
-    public void setWeekly_goal(Integer weekly_goal) {
-        this.weekly_goal = weekly_goal;
+    public void setWeeklyGoal(Integer weeklyGoal) {
+        this.weeklyGoal = weeklyGoal;
     }
 
-    public String getWeight_units() {
-        return weight_units;
+    public Units getWeightUnits() {
+        return weightUnits;
     }
 
-    public void setWeight_units(String weight_units) {
-        this.weight_units = weight_units;
+    public void setWeightUnits(Units weightUnits) {
+        this.weightUnits = weightUnits;
     }
 
     @Override
@@ -84,8 +93,8 @@ public class Preferences implements Serializable {
     public String toString() {
         return "Preferences{" +
                 "id=" + id +
-                ", weekly_goal='" + weekly_goal + "'" +
-                ", weight_units='" + weight_units + "'" +
+                ", weekly_goal='" + weeklyGoal + "'" +
+                ", weight_units='" + weightUnits + "'" +
                 '}';
     }
 }

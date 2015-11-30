@@ -2,6 +2,7 @@ package org.daniels.jhipster.myhealth.web.rest;
 
 import org.daniels.jhipster.myhealth.Application;
 import org.daniels.jhipster.myhealth.domain.Preferences;
+import org.daniels.jhipster.myhealth.domain.enumeration.Units;
 import org.daniels.jhipster.myhealth.repository.PreferencesRepository;
 import org.daniels.jhipster.myhealth.repository.search.PreferencesSearchRepository;
 
@@ -42,8 +43,8 @@ public class PreferencesResourceTest {
 
     private static final Integer DEFAULT_WEEKLY_GOAL = 10;
     private static final Integer UPDATED_WEEKLY_GOAL = 11;
-    private static final String DEFAULT_WEIGHT_UNITS = "SAMPLE_TEXT";
-    private static final String UPDATED_WEIGHT_UNITS = "UPDATED_TEXT";
+    private static final Units DEFAULT_WEIGHT_UNITS = Units.kg;
+    private static final Units UPDATED_WEIGHT_UNITS = Units.lb;
 
     @Inject
     private PreferencesRepository preferencesRepository;
@@ -67,8 +68,8 @@ public class PreferencesResourceTest {
     @Before
     public void initTest() {
         preferences = new Preferences();
-        preferences.setWeekly_goal(DEFAULT_WEEKLY_GOAL);
-        preferences.setWeight_units(DEFAULT_WEIGHT_UNITS);
+        preferences.setWeeklyGoal(DEFAULT_WEEKLY_GOAL);
+        preferences.setWeightUnits(DEFAULT_WEIGHT_UNITS);
     }
 
     @Test
@@ -86,8 +87,8 @@ public class PreferencesResourceTest {
         List<Preferences> preferencess = preferencesRepository.findAll();
         assertThat(preferencess).hasSize(databaseSizeBeforeCreate + 1);
         Preferences testPreferences = preferencess.get(preferencess.size() - 1);
-        assertThat(testPreferences.getWeekly_goal()).isEqualTo(DEFAULT_WEEKLY_GOAL);
-        assertThat(testPreferences.getWeight_units()).isEqualTo(DEFAULT_WEIGHT_UNITS);
+        assertThat(testPreferences.getWeeklyGoal()).isEqualTo(DEFAULT_WEEKLY_GOAL);
+        assertThat(testPreferences.getWeightUnits()).isEqualTo(DEFAULT_WEIGHT_UNITS);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class PreferencesResourceTest {
         // Validate the database is empty
         assertThat(preferencesRepository.findAll()).hasSize(0);
         // set the field null
-        preferences.setWeekly_goal(null);
+        preferences.setWeeklyGoal(null);
 
         // Create the Preferences, which fails.
         restPreferencesMockMvc.perform(post("/api/preferencess")
@@ -115,7 +116,7 @@ public class PreferencesResourceTest {
         // Validate the database is empty
         assertThat(preferencesRepository.findAll()).hasSize(0);
         // set the field null
-        preferences.setWeight_units(null);
+        preferences.setWeightUnits(null);
 
         // Create the Preferences, which fails.
         restPreferencesMockMvc.perform(post("/api/preferencess")
@@ -139,8 +140,8 @@ public class PreferencesResourceTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(preferences.getId().intValue())))
-                .andExpect(jsonPath("$.[*].weekly_goal").value(hasItem(DEFAULT_WEEKLY_GOAL)))
-                .andExpect(jsonPath("$.[*].weight_units").value(hasItem(DEFAULT_WEIGHT_UNITS.toString())));
+                .andExpect(jsonPath("$.[*].weeklyGoal").value(hasItem(DEFAULT_WEEKLY_GOAL)))
+                .andExpect(jsonPath("$.[*].weightUnits").value(hasItem(DEFAULT_WEIGHT_UNITS.toString())));
     }
 
     @Test
@@ -175,8 +176,8 @@ public class PreferencesResourceTest {
 		int databaseSizeBeforeUpdate = preferencesRepository.findAll().size();
 
         // Update the preferences
-        preferences.setWeekly_goal(UPDATED_WEEKLY_GOAL);
-        preferences.setWeight_units(UPDATED_WEIGHT_UNITS);
+        preferences.setWeeklyGoal(UPDATED_WEEKLY_GOAL);
+        preferences.setWeightUnits(UPDATED_WEIGHT_UNITS);
         restPreferencesMockMvc.perform(put("/api/preferencess")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(preferences)))
@@ -186,8 +187,8 @@ public class PreferencesResourceTest {
         List<Preferences> preferencess = preferencesRepository.findAll();
         assertThat(preferencess).hasSize(databaseSizeBeforeUpdate);
         Preferences testPreferences = preferencess.get(preferencess.size() - 1);
-        assertThat(testPreferences.getWeekly_goal()).isEqualTo(UPDATED_WEEKLY_GOAL);
-        assertThat(testPreferences.getWeight_units()).isEqualTo(UPDATED_WEIGHT_UNITS);
+        assertThat(testPreferences.getWeeklyGoal()).isEqualTo(UPDATED_WEEKLY_GOAL);
+        assertThat(testPreferences.getWeightUnits()).isEqualTo(UPDATED_WEIGHT_UNITS);
     }
 
     @Test

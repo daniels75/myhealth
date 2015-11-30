@@ -23,219 +23,214 @@ import org.joda.time.DateTime;
 @Entity
 @Table(name = "JHI_USER")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName="user")
+@Document(indexName = "user")
 public class User extends AbstractAuditingEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @NotNull
-    @Pattern(regexp = "^[a-z0-9]*$")
-    @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false)
-    private String login;
+	@NotNull
+	@Pattern(regexp = "^[a-z0-9]*$")
+	@Size(min = 1, max = 50)
+	@Column(length = 50, unique = true, nullable = false)
+	private String login;
 
-    @JsonIgnore
-    @NotNull
-    @Size(min = 5, max = 100)
-    @Column(length = 100)
-    private String password;
+	@JsonIgnore
+	@NotNull
+	@Size(min = 5, max = 100)
+	@Column(length = 100)
+	private String password;
 
-    @Size(max = 50)
-    @Column(name = "first_name", length = 50)
-    private String firstName;
+	@Size(max = 50)
+	@Column(name = "first_name", length = 50)
+	private String firstName;
 
-    @Size(max = 50)
-    @Column(name = "last_name", length = 50)
-    private String lastName;
+	@Size(max = 50)
+	@Column(name = "last_name", length = 50)
+	private String lastName;
 
-    @Email
-    @Size(max = 100)
-    @Column(length = 100, unique = true)
-    private String email;
+	@Email
+	@Size(max = 100)
+	@Column(length = 100, unique = true)
+	private String email;
 
-    @Column(nullable = false)
-    private boolean activated = false;
+	@Column(nullable = false)
+	private boolean activated = false;
 
-    @Size(min = 2, max = 5)
-    @Column(name = "lang_key", length = 5)
-    private String langKey;
+	@Size(min = 2, max = 5)
+	@Column(name = "lang_key", length = 5)
+	private String langKey;
 
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
-    @JsonIgnore
-    private String activationKey;
+	@Size(max = 20)
+	@Column(name = "activation_key", length = 20)
+	@JsonIgnore
+	private String activationKey;
 
-    @Size(max = 20)
-    @Column(name = "reset_key", length = 20)
-    private String resetKey;
+	@Size(max = 20)
+	@Column(name = "reset_key", length = 20)
+	private String resetKey;
 
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "reset_date", nullable = true)
-    private DateTime resetDate = null;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Column(name = "reset_date", nullable = true)
+	private DateTime resetDate = null;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-            name = "JHI_USER_AUTHORITY",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Authority> authorities = new HashSet<>();
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "JHI_USER_AUTHORITY", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "authority_name", referencedColumnName = "name") })
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	private Set<Authority> authorities = new HashSet<>();
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<PersistentToken> persistentTokens = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	private Set<PersistentToken> persistentTokens = new HashSet<>();
 
-    @OneToOne
-    @JsonIgnore
-    private Preferences preferences;
-    public Preferences getPreferences() {
-    return preferences;
-    }
-    public void setPreferences(Preferences preferences) {
-    this.preferences = preferences;
-    }
-    public Long getId() {
-        return id;
-    }
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Preferences preferences;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Preferences getPreferences() {
+		return preferences;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public void setPreferences(Preferences preferences) {
+		this.preferences = preferences;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public boolean getActivated() {
-        return activated;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getActivationKey() {
-        return activationKey;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
+	public boolean getActivated() {
+		return activated;
+	}
 
-    public String getResetKey() {
-        return resetKey;
-    }
+	public void setActivated(boolean activated) {
+		this.activated = activated;
+	}
 
-    public void setResetKey(String resetKey) {
-        this.resetKey = resetKey;
-    }
+	public String getActivationKey() {
+		return activationKey;
+	}
 
-    public DateTime getResetDate() {
-       return resetDate;
-    }
+	public void setActivationKey(String activationKey) {
+		this.activationKey = activationKey;
+	}
 
-    public void setResetDate(DateTime resetDate) {
-       this.resetDate = resetDate;
-    }
+	public String getResetKey() {
+		return resetKey;
+	}
 
-    public String getLangKey() {
-        return langKey;
-    }
+	public void setResetKey(String resetKey) {
+		this.resetKey = resetKey;
+	}
 
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
+	public DateTime getResetDate() {
+		return resetDate;
+	}
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
+	public void setResetDate(DateTime resetDate) {
+		this.resetDate = resetDate;
+	}
 
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
+	public String getLangKey() {
+		return langKey;
+	}
 
-    public Set<PersistentToken> getPersistentTokens() {
-        return persistentTokens;
-    }
+	public void setLangKey(String langKey) {
+		this.langKey = langKey;
+	}
 
-    public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
-        this.persistentTokens = persistentTokens;
-    }
+	public Set<Authority> getAuthorities() {
+		return authorities;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	public void setAuthorities(Set<Authority> authorities) {
+		this.authorities = authorities;
+	}
 
-        User user = (User) o;
+	public Set<PersistentToken> getPersistentTokens() {
+		return persistentTokens;
+	}
 
-        if (!login.equals(user.login)) {
-            return false;
-        }
+	public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
+		this.persistentTokens = persistentTokens;
+	}
 
-        return true;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        return login.hashCode();
-    }
+		User user = (User) o;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", activated='" + activated + '\'' +
-                ", langKey='" + langKey + '\'' +
-                ", activationKey='" + activationKey + '\'' +
-                "}";
-    }
+		if (!login.equals(user.login)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return login.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return "User{" + "login='" + login + '\'' + ", password='" + password + '\'' + ", firstName='" + firstName
+				+ '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", activated='" + activated
+				+ '\'' + ", langKey='" + langKey + '\'' + ", activationKey='" + activationKey + '\'' + "}";
+	}
 }
