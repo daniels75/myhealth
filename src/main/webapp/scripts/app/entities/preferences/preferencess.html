@@ -40,37 +40,37 @@
                         </div>
 
                         <div class="form-group">
-                            <label translate="myhealthApp.preferences.weekly_goal">Weekly_goal</label>
-                            <input type="number" class="form-control" name="weekly_goal"
-                                   ng-model="preferences.weekly_goal" required min="10" max="21">
+                            <label translate="myhealthApp.preferences.weeklyGoal">WeeklyGoal</label>
+                            <input type="number" class="form-control" name="weeklyGoal"
+                                   ng-model="preferences.weeklyGoal" required min="10" max="21">
 
-                            <div ng-show="editForm.weekly_goal.$invalid">
+                            <div ng-show="editForm.weeklyGoal.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.weekly_goal.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.weeklyGoal.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.weekly_goal.$error.min" translate="entity.validation.min" translate-value-min="10">
+                                   ng-show="editForm.weeklyGoal.$error.min" translate="entity.validation.min" translate-value-min="10">
                                     This field should be more than 10.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.weekly_goal.$error.max" translate="entity.validation.max" translate-value-max="21">
+                                   ng-show="editForm.weeklyGoal.$error.max" translate="entity.validation.max" translate-value-max="21">
                                     This field cannot be more than 21.
                                 </p>
                                 <p class="help-block"
-                                   ng-show="editForm.weekly_goal.$error.number" translate="entity.validation.number">
+                                   ng-show="editForm.weeklyGoal.$error.number" translate="entity.validation.number">
                                     This field should be a number.
                                 </p>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label translate="myhealthApp.preferences.weight_units">Weight_units</label>
-                            <input type="text" class="form-control" name="weight_units"
-                                   ng-model="preferences.weight_units" required>
+                            <label translate="myhealthApp.preferences.weightUnits">WeightUnits</label>
+                            <input type="text" class="form-control" name="weightUnits"
+                                   ng-model="preferences.weightUnits" required>
 
-                            <div ng-show="editForm.weight_units.$invalid">
+                            <div ng-show="editForm.weightUnits.$invalid">
                                 <p class="help-block"
-                                   ng-show="editForm.weight_units.$error.required" translate="entity.validation.required">
+                                   ng-show="editForm.weightUnits.$error.required" translate="entity.validation.required">
                                     This field is required.
                                 </p>
                             </div>
@@ -120,16 +120,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th translate="myhealthApp.preferences.weekly_goal">Weekly_goal</th>
-                    <th translate="myhealthApp.preferences.weight_units">Weight_units</th>
+                    <th translate="myhealthApp.preferences.weeklyGoal">WeeklyGoal</th>
+                    <th translate="myhealthApp.preferences.weightUnits">WeightUnits</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="preferences in preferencess">
                     <td><a ui-sref="preferencesDetail({id:preferences.id})">{{preferences.id}}</a></td>
-                    <td>{{preferences.weekly_goal}}</td>
-                    <td>{{preferences.weight_units}}</td>
+                    <td>{{preferences.weeklyGoal}}</td>
+                    <td>{{preferences.weightUnits}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="preferencesDetail({id:preferences.id})"

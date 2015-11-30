@@ -15,11 +15,11 @@
     "fields": [
         {
             "fieldId": 1,
-            "fieldName": "weekly_goal",
+            "fieldName": "weeklyGoal",
             "fieldType": "Integer",
-            "fieldNameCapitalized": "Weekly_goal",
+            "fieldNameCapitalized": "WeeklyGoal",
             "fieldNameUnderscored": "weekly_goal",
-            "fieldInJavaBeanMethod": "Weekly_goal",
+            "fieldInJavaBeanMethod": "WeeklyGoal",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required",
@@ -31,11 +31,12 @@
         },
         {
             "fieldId": 2,
-            "fieldName": "weight_units",
-            "fieldType": "String",
-            "fieldNameCapitalized": "Weight_units",
+            "fieldName": "weightUnits",
+            "fieldType": "Units",
+            "fieldValues": "kg,lb",
+            "fieldNameCapitalized": "WeightUnits",
             "fieldNameUnderscored": "weight_units",
-            "fieldInJavaBeanMethod": "Weight_units",
+            "fieldInJavaBeanMethod": "WeightUnits",
             "fieldValidate": true,
             "fieldValidateRules": [
                 "required"

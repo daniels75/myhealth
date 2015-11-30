@@ -12,8 +12,8 @@
             "detail": {
                 "title": "Preferences"
             },
-            "weekly_goal": "Weekly_goal",
-            "weight_units": "Weight_units",
+            "weeklyGoal": "WeeklyGoal",
+            "weightUnits": "WeightUnits",
             "user": "user"
         }
     }

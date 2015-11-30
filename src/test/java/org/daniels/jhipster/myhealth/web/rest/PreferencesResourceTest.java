@@ -93,7 +93,7 @@ public class PreferencesResourceTest {
 
     @Test
     @Transactional
-    public void checkWeekly_goalIsRequired() throws Exception {
+    public void checkWeeklyGoalIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(preferencesRepository.findAll()).hasSize(0);
         // set the field null
@@ -112,7 +112,7 @@ public class PreferencesResourceTest {
 
     @Test
     @Transactional
-    public void checkWeight_unitsIsRequired() throws Exception {
+    public void checkWeightUnitsIsRequired() throws Exception {
         // Validate the database is empty
         assertThat(preferencesRepository.findAll()).hasSize(0);
         // set the field null
@@ -155,8 +155,8 @@ public class PreferencesResourceTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(preferences.getId().intValue()))
-            .andExpect(jsonPath("$.weekly_goal").value(DEFAULT_WEEKLY_GOAL))
-            .andExpect(jsonPath("$.weight_units").value(DEFAULT_WEIGHT_UNITS.toString()));
+            .andExpect(jsonPath("$.weeklyGoal").value(DEFAULT_WEEKLY_GOAL))
+            .andExpect(jsonPath("$.weightUnits").value(DEFAULT_WEIGHT_UNITS.toString()));
     }
 
     @Test

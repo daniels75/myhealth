@@ -67,7 +67,7 @@ class PreferencesGatlingTest extends Simulation {
             .exec(http("Create new preferences")
             .put("/api/preferencess")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "weekly_goal":"0", "weight_units":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "weeklyGoal":"0", "weightUnits":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_preferences_url")))
             .pause(10)

@@ -65,7 +65,7 @@ angular.module('myhealthApp')
         };
 
         $scope.clear = function () {
-            $scope.preferences = {weekly_goal: null, weight_units: null, id: null};
+            $scope.preferences = {weeklyGoal: null, weightUnits: null, id: null};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };
