@@ -27,7 +27,7 @@
         {
             "fieldId": 2,
             "fieldName": "weight",
-            "fieldType": "Long",
+            "fieldType": "Double",
             "fieldNameCapitalized": "Weight",
             "fieldNameUnderscored": "weight",
             "fieldInJavaBeanMethod": "Weight",
@@ -42,7 +42,7 @@
     "fieldsContainOneToMany": false,
     "fieldsContainLocalDate": false,
     "fieldsContainCustomTime": true,
-    "fieldsContainBigDecimal": false,
+    "fieldsContainBigDecimal": true,
     "fieldsContainDateTime": true,
     "fieldsContainDate": false,
     "changelogDate": "20151201164738",

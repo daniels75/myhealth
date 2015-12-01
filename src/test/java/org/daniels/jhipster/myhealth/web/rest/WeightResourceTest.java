@@ -148,7 +148,7 @@ public class WeightResourceTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(weight.getId().intValue())))
                 .andExpect(jsonPath("$.[*].timestamp").value(hasItem(DEFAULT_TIMESTAMP_STR)))
-                .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.intValue())));
+                .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class WeightResourceTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(weight.getId().intValue()))
             .andExpect(jsonPath("$.timestamp").value(DEFAULT_TIMESTAMP_STR))
-            .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.intValue()));
+            .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.doubleValue()));
     }
 
     @Test

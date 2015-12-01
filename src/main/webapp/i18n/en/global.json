@@ -17,7 +17,7 @@
                 "settings": "Settings",
                 "password": "Password",
                 "sessions": "Sessions",
-                "login": "Authenticate",
+                "login": "Sign In",
                 "logout": "Log out",
                 "register": "Register"
             },
