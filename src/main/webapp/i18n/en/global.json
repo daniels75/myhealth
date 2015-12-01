@@ -8,6 +8,8 @@
                 "main": "Entities",
                 "points": "Points",
                 "preferences": "Preferences",
+                "weight": "Weight",
+                "bloodPressure": "BloodPressure",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
