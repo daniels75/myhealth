@@ -6,12 +6,17 @@
         <div class="col-sm-5 text-right">
             <form name="searchForm" class="form-inline">
                 <div class="form-group p-r">
-                    <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="{{'entity.action.search' | translate}}">
+                    <input type="text" class="form-control"
+                        ng-model="searchQuery" id="searchQuery"
+                        placeholder="{{'entity.action.search' | translate}}">
                 </div>
-                <button class="btn btn-info btn-sm" ng-click="search()" tooltip="{{'entity.action.search' | translate}}"><span class="glyphicon glyphicon-search"></span>
+                <button class="btn btn-info btn-sm" ng-click="search()"
+                    tooltip="{{'entity.action.search' | translate}}">
+                    <i class="glyphicon glyphicon-search"></i>
                 </button>
-
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#savePointsModal" ng-click="clear()" tooltip="{{'entity.action.new' | translate}}">
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                     data-target="#savePointsModal" ng-click="clear()"
+                     tooltip="{{'entity.action.new' | translate}}">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>                             
             </form>
@@ -149,7 +154,7 @@
                 </td>
                 <td>{{points.user.login}}</td>
                 <td>
-                    <div class="btn-group m-n">
+                    <div class="btn-group m-n" >
                         <button type="submit" tooltip="{{'entity.action.view' | translate}}"
                                 ui-sref="pointsDetail({id:points.id})"
                                 class="btn btn-info btn-xs">
