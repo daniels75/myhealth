@@ -75,10 +75,14 @@
     },
     "entity": {
         "action": {
+            "addblob": "Add blob",
+            "addimage": "Add image",
             "back": "Back",
             "cancel": "Cancel",
             "delete": "Delete",
             "edit": "Edit",
+            "new": "Add",
+            "search": "Search",
             "save": "Save",
             "view": "View"
         },
@@ -95,10 +99,16 @@
             "maxlength": "This field cannot be longer than {{max}} characters.",
             "min": "This field should be more than {{min}}.",
             "max": "This field cannot be more than {{max}}.",
+            "minbytes": "This field should be more than {{min}} bytes.",
+            "maxbytes": "This field cannot be more than {{max}} bytes.",
             "pattern": "This field should follow pattern {{pattern}}.",
             "number": "This field should be a number.",
             "datetimelocal": "This field should be a date and time."
         }
     },
-    "footer": "This is your footer"
+    "error" : {
+        "serverNotReachable" : "Server not reachable",
+        "NotNull" : "Field {{fieldName}} cannot be empty!"
+    },
+    "footer": "<strong>21-Points Health</strong> | An application developed for a better life and <a href='http://www.jhipster-book.com' target='_blank'>The JHipster Mini-Book</a> | By <a href='http://raibledesigns.com' target='_blank'>Matt Raible</a>"
 }

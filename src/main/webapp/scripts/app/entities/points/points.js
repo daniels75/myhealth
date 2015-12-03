@@ -19,6 +19,7 @@ angular.module('myhealthApp')
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('points');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
                 }
