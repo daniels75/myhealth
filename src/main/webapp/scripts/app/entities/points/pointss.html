@@ -35,11 +35,7 @@
                         <h4 class="modal-title" id="myPointsLabel" translate="myhealthApp.points.home.createOrEditLabel">Create or edit a Points</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="points.id" readonly>
-                        </div>
+
 
                         <div class="form-group">
                             <label translate="myhealthApp.points.date">Date</label>
@@ -53,36 +49,79 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label translate="myhealthApp.points.exercise">Exercise</label>
-                            <input type="number" class="form-control" name="exercise"
-                                   ng-model="points.exercise">
 
-                        </div>
                         <div class="form-group">
-                            <label translate="myhealthApp.points.meals">Meals</label>
-                            <input type="number" class="form-control" name="meals"
-                                   ng-model="points.meals">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="myhealthApp.points.alcohol">Alcohol</label>
-                            <input type="number" class="form-control" name="alcohol"
-                                   ng-model="points.alcohol">
-
-                        </div>
-                        <div class="form-group">
-                            <label translate="myhealthApp.points.notes">Notes</label>
-                            <input type="text" class="form-control" name="notes"
-                                   ng-model="points.notes">
-
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" 
+                                           ng-model="points.exercise" id="field_exercise"
+                                           ng-true-value="1" ng-false-value="0">
+                                    <span class="checkbox-material">
+                                        <span class="check"></span>
+                                    </span>
+                                    <label translate="myhealthApp.points.exercise"
+                                         for="field_exercise">Exercise
+                                     </label>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label translate="myhealthApp.points.user">user</label>
-                            <select class="form-control" name="user" ng-model="points.user.id" ng-options="user.id as user.login for user in users">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" 
+                                           ng-model="points.meals" id="field_meals"
+                                           ng-true-value="1" ng-false-value="0">
+                                    <span class="checkbox-material">
+                                        <span class="check"></span>
+                                    </span>
+                                    <label translate="myhealthApp.points.meals"
+                                         for="field_meals">Meals
+                                     </label>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" 
+                                           ng-model="points.alcohol" id="field_alcohol"
+                                           ng-true-value="1" ng-false-value="0">
+                                    <span class="checkbox-material">
+                                        <span class="check"></span>
+                                    </span>
+                                    <label translate="myhealthApp.points.alcohol"
+                                         for="field_alcohol">Meals
+                                     </label>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label translate="myhealthApp.points.notes" for="field_notes">Notes</label>
+                            <textarea class="form-control" name="notes" id="field_notes"
+                                    ng-model="points.notes"
+                                    ng-maxlength="140" rows="3">
+                            </textarea>
+
+                            <div ng-show="editForm.notes.$invalid">
+                                <p class="help-block"
+                                    ng-show="editForm.notes.$error.maxlength" translate="entity.validation.maxlength" translate-value-max="140">
+                                    This field cannot be longer than 140 characters.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group" has-role="ROLE_ADMIN">
+                            <label translate="myhealthApp.points.user" for="field_user">user</label>
+                            <select class="form-control" id="field_user" name="user"
+                                 ng-model="points.user.id" 
+                                 ng-options="user.id as user.login for user in users">
                             </select>
                         </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
