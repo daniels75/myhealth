@@ -1,6 +1,5 @@
-
 <div>
-    <h2><span translate="myhealthApp.bloodPressure.detail.title">BloodPressure</span> {{bloodPressure.id}}</h2>
+    <h2><span translate="myhealthApp.bloodPressure.detail.title">BloodPressure</span></h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -15,8 +14,8 @@
                         <span translate="myhealthApp.bloodPressure.timestamp">Timestamp</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{bloodPressure.timestamp}}" readonly>
-                    </td>
+                        <input type="text" class="input-sm form-control" value="{{bloodPressure.timestamp | date: 'short': 'UTC'}}" readonly>
+                    </td>                    
                 </tr>
                 <tr>
                     <td>

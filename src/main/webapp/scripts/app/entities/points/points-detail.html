@@ -1,6 +1,6 @@
 
 <div>
-    <h2><span translate="myhealthApp.points.detail.title">Points</span> {{points.id}}</h2>
+    <h2><span translate="myhealthApp.points.detail.title">Points</span></h2>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -15,32 +15,32 @@
                         <span translate="myhealthApp.points.date">Date</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{points.date}}" readonly>
-                    </td>
+                        <input type="text" class="input-sm form-control" value="{{points.date | date}}" readonly>
+                    </td>                    
                 </tr>
                 <tr>
                     <td>
                         <span translate="myhealthApp.points.exercise">Exercise</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{points.exercise}}" readonly>
-                    </td>
+                    <i class="glyphicon" ng-class="{'glyphicon-ok text-success': points.exercise,
+                                                    'glyphicon-remove text-danger': !points.exercise}"></i>                </td>
                 </tr>
                 <tr>
                     <td>
                         <span translate="myhealthApp.points.meals">Meals</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{points.meals}}" readonly>
-                    </td>
+                    <i class="glyphicon" ng-class="{'glyphicon-ok text-success': points.meals,
+                                                    'glyphicon-remove text-danger': !points.meals}"></i>                </td>
                 </tr>
                 <tr>
                     <td>
                         <span translate="myhealthApp.points.alcohol">Alcohol</span>
                     </td>
                     <td>
-                        <input type="text" class="input-sm form-control" value="{{points.alcohol}}" readonly>
-                    </td>
+                    <i class="glyphicon" ng-class="{'glyphicon-ok text-success': points.alcohol,
+                                                    'glyphicon-remove text-danger': !points.alcohol}"></i>                </td>
                 </tr>
                 <tr>
                     <td>

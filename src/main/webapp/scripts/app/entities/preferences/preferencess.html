@@ -1,25 +1,30 @@
 <div>
-
-    <h2 translate="myhealthApp.preferences.home.title">Preferencess</h2>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#savePreferencesModal" ng-click="clear()">
-                    <span class="glyphicon glyphicon-flash"></span> <span translate="myhealthApp.preferences.home.createLabel">Create a new Preferences</span>
+    <div class="row">
+        <div class="col-sm-7">
+            <h2 translate="myhealthApp.preferences.home.title">
+                Preferencess
+            </h2>
+        </div>
+        <div class="col-sm-5 text-right">
+            <form name="searchForm" class="form-inline">
+                <div class="form-group p-r">
+                    <input type="text" class="form-control"
+                        ng-model="searchQuery" id="searchQuery"
+                        placeholder="{{'entity.action.search' | translate}}">
+                </div>
+                <button class="btn btn-info btn-sm" ng-click="search()"
+                    tooltip="{{'entity.action.search' | translate}}">
+                    <i class="glyphicon glyphicon-search"></i>
                 </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
-                    </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Preferences</span>
-                    </button>
-                </form>
-            </div>
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                     data-target="#savePreferencesModal" ng-click="clear()"
+                     tooltip="{{'entity.action.new' | translate}}">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>                             
+            </form>
         </div>
     </div>
+
 
     <div class="modal fade" id="savePreferencesModal" tabindex="-1" role="dialog" aria-labelledby="myPreferencesLabel"
          aria-hidden="true">
@@ -33,12 +38,6 @@
                         <h4 class="modal-title" id="myPreferencesLabel" translate="myhealthApp.preferences.home.createOrEditLabel">Create or edit a Preferences</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="preferences.id" readonly>
-                        </div>
-
                         <div class="form-group">
                             <label translate="myhealthApp.preferences.weeklyGoal">WeeklyGoal</label>
                             <input type="number" class="form-control" name="weeklyGoal"
@@ -119,32 +118,30 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th translate="myhealthApp.preferences.weeklyGoal">WeeklyGoal</th>
                     <th translate="myhealthApp.preferences.weightUnits">WeightUnits</th>
-                    <th></th>
+                    <th translate="myhealthApp.preferences.actions" class="col-md-2">Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
                 <tr ng-repeat="preferences in preferencess">
-                    <td><a ui-sref="preferencesDetail({id:preferences.id})">{{preferences.id}}</a></td>
+                    <td><a ui-sref="preferencesDetail({id:preferences.id})">{{preferences.weeklyGoal}}</a></td>
                     <td>{{preferences.weeklyGoal}}</td>
-                    <td>{{preferences.weightUnits}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="preferencesDetail({id:preferences.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
+                                class="btn btn-info btn-xs">
+                            <span class="glyphicon glyphicon-eye-open"></span>
                         </button>
                         <button type="submit"
                                 ng-click="showUpdate(preferences.id)"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
+                                class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-pencil"></span>
                         </button>
                         <button type="submit"
                                 ng-click="delete(preferences.id)"
-                                class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
+                                class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-remove-circle"></span>
                         </button>
                     </td>
                 </tr>

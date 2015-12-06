@@ -1,23 +1,25 @@
 <div>
-
-    <h2 translate="myhealthApp.weight.home.title">Weights</h2>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#saveWeightModal" ng-click="clear()">
-                    <span class="glyphicon glyphicon-flash"></span> <span translate="myhealthApp.weight.home.createLabel">Create a new Weight</span>
+    <div class="row">
+        <div class="col-sm-7">
+            <h2 translate="myhealthApp.weight.home.title">Weights</h2>
+        </div>
+        <div class="col-sm-5 text-right">
+            <form name="searchForm" class="form-inline">
+                <div class="form-group p-r">
+                    <input type="text" class="form-control"
+                        ng-model="searchQuery" id="searchQuery"
+                        placeholder="{{'entity.action.search' | translate}}">
+                </div>
+                <button class="btn btn-info btn-sm" ng-click="search()"
+                    tooltip="{{'entity.action.search' | translate}}">
+                    <i class="glyphicon glyphicon-search"></i>
                 </button>
-            </div>
-            <div class="col-md-8">
-                <form name="searchForm" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" ng-model="searchQuery" id="searchQuery" placeholder="query">
-                    </div>
-                    <button class="btn btn-info" ng-click="search()"><span class="glyphicon glyphicon-search"></span> <span>Search a Weight</span>
-                    </button>
-                </form>
-            </div>
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                     data-target="#saveWeightModal" ng-click="clear()"
+                     tooltip="{{'entity.action.new' | translate}}">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>                             
+            </form>
         </div>
     </div>
 
@@ -30,15 +32,10 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                 ng-click="clear()">&times;</button>
-                        <h4 class="modal-title" id="myWeightLabel" translate="myhealthApp.weight.home.createOrEditLabel">Create or edit a Weight</h4>
+                        <h4 class="modal-title" id="myWeightLabel" translate="myhealthApp.weight.home.createOrEditLabel">Edit your weight</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>ID</label>
-                            <input type="text" class="form-control" name="id"
-                                   ng-model="weight.id" readonly>
-                        </div>
-
+           
                         <div class="form-group">
                             <label translate="myhealthApp.weight.timestamp">Timestamp</label>
                             <input type="datetime-local" class="form-control" name="timestamp"
@@ -120,35 +117,33 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th translate="myhealthApp.weight.timestamp">Timestamp</th>
                     <th translate="myhealthApp.weight.weight">Weight</th>
                     <th translate="myhealthApp.weight.user">user</th>
-                    <th></th>
+                    <th translate="myhealthApp.weight.actions" class="col-md-2">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr ng-repeat="weight in weights">
-                    <td><a ui-sref="weightDetail({id:weight.id})">{{weight.id}}</a></td>
-                    <td>{{weight.timestamp}}</td>
+            <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
+                <tr ng-repeat="weight in weights | orderBy: '-timestamp'">
+                    <td><a ui-sref="weight.detail({id:weight.id})">{{weight.timestamp | date: 'medium': 'UTC'}}</a></td>
                     <td>{{weight.weight}}</td>
                     <td>{{weight.user.login}}</td>
                     <td>
-                        <button type="submit"
-                                ui-sref="weightDetail({id:weight.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
-                        </button>
-                        <button type="submit"
-                                ng-click="showUpdate(weight.id)"
-                                class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span translate="entity.action.edit"> Edit</span>
-                        </button>
-                        <button type="submit"
-                                ng-click="delete(weight.id)"
-                                class="btn btn-danger btn-sm">
-                            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"> Delete</span>
-                        </button>
+                        <div class="btn-group m-n">
+                            <button type="submit" tooltip="{{'entity.action.view' | translate}}"
+                                    ui-sref="weightDetail({id:weight.id})" class="btn btn-info btn-xs">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                            <button type="submit" tooltip="{{'entity.action.edit' | translate}}"
+                                    ng-click="showUpdate(weight.id)"
+                                     class="btn btn-primary btn-xs">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="submit" tooltip="{{'entity.action.delete' | translate}}"
+                                    ng-click="delete(weight.id)" class="btn btn-danger btn-xs">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
