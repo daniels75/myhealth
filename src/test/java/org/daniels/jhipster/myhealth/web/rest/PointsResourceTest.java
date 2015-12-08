@@ -112,14 +112,14 @@ public class PointsResourceTest {
         int databaseSizeBeforeCreate = pointsRepository.findAll().size();
 
         // create security-aware mockMvc
-        restPointsMockMvc = MockMvcBuilders
-            .webAppContextSetup(context)
-            .apply(springSecurity())
-            .build();
+//        restPointsMockMvc = MockMvcBuilders
+//            .webAppContextSetup(context)
+//            .apply(springSecurity())
+//            .build();
 
         // Create the Points
         restPointsMockMvc.perform(post("/api/points")
-                .with(user("user"))
+        		.with(user("user").roles("USER"))
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(points)))
                 .andExpect(status().isCreated());
@@ -135,6 +135,7 @@ public class PointsResourceTest {
         assertThat(testPoints.getNotes()).isEqualTo(DEFAULT_NOTES);
     }
 
+    
     @Test
     @Transactional
     public void checkDateIsRequired() throws Exception {
@@ -160,10 +161,10 @@ public class PointsResourceTest {
         pointsRepository.saveAndFlush(points);
 
         // create security-aware mockMvc
-        restPointsMockMvc = MockMvcBuilders
-            .webAppContextSetup(context)
-            .apply(springSecurity())
-            .build();
+//        restPointsMockMvc = MockMvcBuilders
+//            .webAppContextSetup(context)
+//            .apply(springSecurity())
+//            .build();
 
         // Get all the points
         restPointsMockMvc.perform(get("/api/points")
