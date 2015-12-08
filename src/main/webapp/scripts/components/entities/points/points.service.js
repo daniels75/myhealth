@@ -2,7 +2,7 @@
 
 angular.module('myhealthApp')
     .factory('Points', function ($resource, DateUtils) {
-        return $resource('api/pointss/:id', {}, {
+        return $resource('api/points/:id', {}, {
             'query': { method: 'GET', isArray: true},
             'thisWeek': { method: 'GET', isArray: false, url: 'api/points-this-week'},
             'byMonth': { method: 'GET', isArray: false, url: 'api/points-by-month/:month'},
