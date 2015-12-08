@@ -175,7 +175,7 @@
                 </tr>
             </thead>
             <tbody infinite-scroll="loadPage(page + 1)" infinite-scroll-disabled="links['last'] == page">
-            <tr ng-repeat="points in pointss">
+            <tr ng-repeat="points in points">
                 <td class="text-nowrap">
                     <a ui-sref="pointsDetail({id:points.id})">{{points.date | date}}</a>
                 </td>
