@@ -105,11 +105,14 @@ public class PointsResource {
 	public ResponseEntity<List<Points>> getAll(@RequestParam(value = "page", required = false) Integer offset,
 			@RequestParam(value = "per_page", required = false) Integer limit) throws URISyntaxException {
 		Page<Points> page;
-		if (SecurityUtils.isUserInRole(AuthoritiesConstants.ADMIN)) {
+		boolean  isAutenticated= SecurityUtils.isAuthenticated();
+		boolean adminRole = SecurityUtils.isUserInRole(AuthoritiesConstants.ADMIN);
+		if (adminRole) {
 			page = pointsRepository.findAllByOrderByDateDesc(PaginationUtil.generatePageRequest(offset, limit));
 		} else {
 			page = pointsRepository.findAllForCurrentUser(PaginationUtil.generatePageRequest(offset, limit));
 		}
+		System.out.println(">>>> " + "isAutenticated " +isAutenticated + " adminRole " + adminRole + " data: " + page.getContent());
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/points", offset, limit);
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

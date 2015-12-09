@@ -59,7 +59,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @IntegrationTest
-public class PointsResourceTest {
+public class PointsResourceSecuredTest {
 
     private static final LocalDate DEFAULT_DATE = new LocalDate(0L);
     private static final LocalDate UPDATED_DATE = new LocalDate();
@@ -84,18 +84,15 @@ public class PointsResourceTest {
     @Inject
     private UserRepository userRepository;
 
-    @Inject
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    private MockMvc restPointsMockMvc;
-
     private Points points;
 
     @Autowired
     private WebApplicationContext context;
     
-    //private MockMvc restPointsMockMvcSecured;
+    private MockMvc restPointsMockMvcSecured;
     
+
+
     @PostConstruct
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -103,11 +100,11 @@ public class PointsResourceTest {
         ReflectionTestUtils.setField(pointsResource, "pointsRepository", pointsRepository);
         ReflectionTestUtils.setField(pointsResource, "pointsSearchRepository", pointsSearchRepository);
         ReflectionTestUtils.setField(pointsResource, "userRepository", userRepository);
-        this.restPointsMockMvc = MockMvcBuilders.standaloneSetup(pointsResource).setMessageConverters(jacksonMessageConverter).build();
-//        this.restPointsMockMvcSecured = MockMvcBuilders
-//                .webAppContextSetup(context)
-//                .apply(springSecurity())
-//                .build();
+        this.restPointsMockMvcSecured = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+
     }
 
     @Before
@@ -120,7 +117,6 @@ public class PointsResourceTest {
         points.setNotes(DEFAULT_NOTES);
     }
 
-    /*
     @Test
     @Transactional
     public void createPoints() throws Exception {
@@ -144,38 +140,11 @@ public class PointsResourceTest {
         assertThat(testPoints.getNotes()).isEqualTo(DEFAULT_NOTES);
     }
 
-	*/
-    
-    @Test
-    @Transactional
-    public void checkDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = pointsRepository.findAll().size();
-        // set the field null
-        points.setDate(null);
-
-        // Create the Points, which fails.
-
-        restPointsMockMvc.perform(post("/api/points")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(points)))
-                .andExpect(status().isBadRequest());
-
-        List<Points> points = pointsRepository.findAll();
-        assertThat(points).hasSize(databaseSizeBeforeTest);
-    }
-
-    /*
     @Test
     @Transactional
     public void getAllPoints() throws Exception {
         // Initialize the database
         pointsRepository.saveAndFlush(points);
-
-        // create security-aware mockMvc
-//        restPointsMockMvcSecured = MockMvcBuilders
-//            .webAppContextSetup(context)
-//            .apply(springSecurity())
-//            .build();
 
         // Get all the points
         restPointsMockMvcSecured.perform(get("/api/points")
@@ -189,82 +158,133 @@ public class PointsResourceTest {
             .andExpect(jsonPath("$.[*].alcohol").value(hasItem(DEFAULT_ALCOHOL)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES.toString())));
     }
-    */
+
 
     @Test
     @Transactional
-    public void getPoints() throws Exception {
-        // Initialize the database
-        pointsRepository.saveAndFlush(points);
+    public void getPointsThisWeek() throws Exception {
+        LocalDate today = new LocalDate();
+        LocalDate thisMonday = today.withDayOfWeek(DateTimeConstants.MONDAY);
+        LocalDate lastMonday = thisMonday.minusWeeks(1);
+        createPointsByWeek(thisMonday, lastMonday);
 
-        // Get the points
-        restPointsMockMvc.perform(get("/api/points/{id}", points.getId()))
+        // create security-aware mockMvc
+        restPointsMockMvcSecured = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
+        // Get all the points
+        restPointsMockMvcSecured.perform(get("/api/points")
+            .with(user("user").roles("USER")))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(points.getId().intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.exercise").value(DEFAULT_EXERCISE))
-            .andExpect(jsonPath("$.meals").value(DEFAULT_MEALS))
-            .andExpect(jsonPath("$.alcohol").value(DEFAULT_ALCOHOL))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES.toString()));
+            .andExpect(jsonPath("$", hasSize(4)));
+
+        // Get the points for this week only
+        restPointsMockMvcSecured.perform(get("/api/points-this-week")
+            .with(user("user").roles("USER")))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.week").value(thisMonday.toString()))
+            .andExpect(jsonPath("$.points").value(5));
     }
 
     @Test
     @Transactional
-    public void getNonExistingPoints() throws Exception {
-        // Get the points
-        restPointsMockMvc.perform(get("/api/points/{id}", Long.MAX_VALUE))
-                .andExpect(status().isNotFound());
+    public void getPointsByWeek() throws Exception {
+        LocalDate today = new LocalDate();
+        LocalDate aMonday = today.minusMonths(2).withDayOfWeek(DateTimeConstants.MONDAY);
+        LocalDate aPreviousMonday = aMonday.minusWeeks(2);
+        createPointsByWeek(aMonday, aPreviousMonday);
+
+        // create security-aware mockMvc
+        restPointsMockMvcSecured = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
+        // Get the points for last week
+        restPointsMockMvcSecured.perform(get("/api/points-by-week/{startDate}", aPreviousMonday.toString())
+            .with(user("user").roles("USER")))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.week").value(aPreviousMonday.toString()))
+            .andExpect(jsonPath("$.points").value(3));
     }
 
     @Test
     @Transactional
-    public void updatePoints() throws Exception {
-        // Initialize the database
+    public void getPointsOnSunday() throws Exception {
+        LocalDate today = new LocalDate();
+        LocalDate sunday = today.withDayOfWeek(DateTimeConstants.SUNDAY);
+        User user = userRepository.findOneByLogin("user").get();
+        points = new Points(sunday, 1, 1, 0, user);
         pointsRepository.saveAndFlush(points);
 
-		int databaseSizeBeforeUpdate = pointsRepository.findAll().size();
+        // create security-aware mockMvc
+        restPointsMockMvcSecured = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
 
-        // Update the points
-        points.setDate(UPDATED_DATE);
-        points.setExercise(UPDATED_EXERCISE);
-        points.setMeals(UPDATED_MEALS);
-        points.setAlcohol(UPDATED_ALCOHOL);
-        points.setNotes(UPDATED_NOTES);
+        // Get all the points
+        restPointsMockMvcSecured.perform(get("/api/points")
+            .with(user("user").roles("USER")))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$", hasSize(1)));
 
-
-        restPointsMockMvc.perform(put("/api/points")
-                .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(points)))
-                .andExpect(status().isOk());
-
-        // Validate the Points in the database
-        List<Points> points = pointsRepository.findAll();
-        assertThat(points).hasSize(databaseSizeBeforeUpdate);
-        Points testPoints = points.get(points.size() - 1);
-        assertThat(testPoints.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testPoints.getExercise()).isEqualTo(UPDATED_EXERCISE);
-        assertThat(testPoints.getMeals()).isEqualTo(UPDATED_MEALS);
-        assertThat(testPoints.getAlcohol()).isEqualTo(UPDATED_ALCOHOL);
-        assertThat(testPoints.getNotes()).isEqualTo(UPDATED_NOTES);
+        // Get the points for this week only
+        restPointsMockMvcSecured.perform(get("/api/points-this-week")
+            .with(user("user").roles("USER")))
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.week").value(sunday.withDayOfWeek(DateTimeConstants.MONDAY).toString()))
+            .andExpect(jsonPath("$.points").value(2));
     }
 
     @Test
     @Transactional
-    public void deletePoints() throws Exception {
-        // Initialize the database
+    public void getPointsByMonth() throws Exception {
+        LocalDate today = new LocalDate();
+        LocalDate firstOfMonth = today.dayOfMonth().withMinimumValue();
+        LocalDate endOfMonth = today.dayOfMonth().withMaximumValue();
+        createPointsByWeek(endOfMonth, firstOfMonth);
+
+        // create security-aware mockMvc
+        restPointsMockMvcSecured = MockMvcBuilders
+            .webAppContextSetup(context)
+            .apply(springSecurity())
+            .build();
+
+        // Get the points for last week
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM");
+        String startDate = fmt.print(firstOfMonth);
+
+        restPointsMockMvcSecured.perform(get("/api/points-by-month/{yearWithMonth}", startDate)
+            .with(user("user").roles("USER")))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.month").value(firstOfMonth.toString()))
+            .andExpect(jsonPath("$.[*].points.[*].date").value(hasItem(firstOfMonth.plusDays(3).toString())))
+            .andExpect(jsonPath("$.[*].points.[*].date").value(hasItem(firstOfMonth.plusDays(4).toString())));
+    }
+    
+    private void createPointsByWeek(LocalDate thisMonday, LocalDate lastMonday) {
+        User user = userRepository.findOneByLogin("user").get();
+        // Create points in two separate weeks
+        points = new Points(thisMonday.plusDays(2), 1, 1, 1, user);
         pointsRepository.saveAndFlush(points);
 
-		int databaseSizeBeforeDelete = pointsRepository.findAll().size();
+        points = new Points(thisMonday.plusDays(3), 1, 1, 0, user);
+        pointsRepository.saveAndFlush(points);
 
-        // Get the points
-        restPointsMockMvc.perform(delete("/api/points/{id}", points.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+        points = new Points(lastMonday.plusDays(3), 0, 0, 1, user);
+        pointsRepository.saveAndFlush(points);
 
-        // Validate the database is empty
-        List<Points> points = pointsRepository.findAll();
-        assertThat(points).hasSize(databaseSizeBeforeDelete - 1);
+        points = new Points(lastMonday.plusDays(4), 1, 1, 0, user);
+        pointsRepository.saveAndFlush(points);
     }
-
 }
