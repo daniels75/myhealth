@@ -34,7 +34,7 @@ public class ApplicationWebXml extends SpringBootServletInitializer {
             return profile;
         }
 
-        log.warn("No Spring profile configured, running with default configuration");
+        log.warn("WebXml - No Spring profile configured, running with default configuration");
         return Constants.SPRING_PROFILE_DEVELOPMENT;
     }
 }
